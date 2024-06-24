@@ -1,9 +1,9 @@
-describe('Amazon search test', function() {
-  it('Searches for a gaming mouse', function() {
-    // Visitez Amazon
-    cy.visit('https://www.amazon.fr/')
+describe('Amazon search test', function () {
+    it('Recherche une souris pour les pro gamerz', function () {
 
-    // Sélectionnez la barre de recherche en utilisant son ID, tapez 'souris gamer' et appuyez sur Entrée
-    cy.get('#twotabsearchtextbox').type('souris gamer{enter}')
-  })
+        cy.visitAmazon()
+
+        // Cherche un article
+        cy.get('#twotabsearchtextbox').type('souris gamer{enter}')
+    })
 })

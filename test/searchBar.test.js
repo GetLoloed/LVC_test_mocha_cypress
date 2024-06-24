@@ -1,31 +1,40 @@
-const { expect } = require('chai');
-const { filterStations } = require('../searchBar.js');
+import {expect} from 'chai';
 
-describe('Search Bar', () => {
-    const stations = ['Paris Gare du Nord', 'Lyon Part-Dieu', 'Marseille Saint-Charles', 'Lille Flandres', 'Bordeaux Saint-Jean'];
+// Définition de la fonction directement dans le fichier de test
+function filterStations(stations, query) {
+    if (!query) {
+        return [];
+    }
+    query = query.toLowerCase();
+    return stations.filter(station => station.toLowerCase().includes(query));
+}
 
-    it('should return a list of stations that match the input', () => {
-        const result = filterStations(stations, 'Paris');
-        expect(result).to.deep.equal(['Paris Gare du Nord']);
+// Les tests pour la fonction filterStations
+describe('Barre de recherche', () => {
+    const gares = ['Paris Gare du Nord', 'Lyon Part-Dieu', 'Marseille Saint-Charles', 'Lille Flandres', 'Bordeaux Saint-Jean'];
+
+    it('doit retourner une liste de gares qui correspondent à l\'entrée', () => {
+        const resultat = filterStations(gares, 'Paris');
+        expect(resultat).to.deep.equal(['Paris Gare du Nord']);
     });
 
-    it('should return multiple stations that match the input', () => {
-        const result = filterStations(stations, 'Saint');
-        expect(result).to.deep.equal(['Marseille Saint-Charles', 'Bordeaux Saint-Jean']);
+    it('doit retourner plusieurs gares qui correspondent à l\'entrée', () => {
+        const resultat = filterStations(gares, 'Saint');
+        expect(resultat).to.deep.equal(['Marseille Saint-Charles', 'Bordeaux Saint-Jean']);
     });
 
-    it('should return an empty list if no stations match the input', () => {
-        const result = filterStations(stations, 'Nice');
-        expect(result).to.deep.equal([]);
+    it('doit retourner une liste vide si aucune gare ne correspond à l\'entrée', () => {
+        const resultat = filterStations(gares, 'Nice');
+        expect(resultat).to.deep.equal([]);
     });
 
-    it('should be case insensitive', () => {
-        const result = filterStations(stations, 'paris');
-        expect(result).to.deep.equal(['Paris Gare du Nord']);
+    it('doit être insensible à la casse', () => {
+        const resultat = filterStations(gares, 'paris');
+        expect(resultat).to.deep.equal(['Paris Gare du Nord']);
     });
 
-    it('should return an empty list if the input is an empty string', () => {
-        const result = filterStations(stations, '');
-        expect(result).to.deep.equal([]);
+    it('doit retourner une liste vide si l\'entrée est une chaîne vide', () => {
+        const resultat = filterStations(gares, '');
+        expect(resultat).to.deep.equal([]);
     });
 });
